@@ -10,18 +10,15 @@ class ApiService {
   }
 
   localLoginUser(credentials) {
-    console.log(credentials)
+    console.log({credentials})
     return {
       status: 'ok',
       message: 'Logged in',
       accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
+      
       user: {
-        id: 1,
-        fname: 'Karn',
-        lname: 'Yong',
-        username: 'karn.yong@mecallapi.com',
-        email: 'karn.yong@mecallapi.com',
-        avatar: 'https://www.mecallapi.com/users/1.png',
+        id:  Math.round(Math.random(0,99999)),
+...credentials
       },
     }
   }

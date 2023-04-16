@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { Button } from 'react-bootstrap'
 import { Form } from 'react-router-dom'
 import Label from '../../component/common/label/Label'
@@ -6,6 +6,7 @@ import Label from '../../component/common/label/Label'
 import ApiService from "../../services/apiService"
 
 const Login = () => {
+  const userInputRef = useRef("");
   const [data, setData] = useState({
     uname:"",
     psw:""
@@ -18,10 +19,12 @@ const Login = () => {
   console.log({data});
   const handleSubmit = async(e) => {
     e.preventDefault();
+    console.log({userInputRef});
     // console.log(e.target, {uname}, {psw});
+    let username = userInputRef.current.value
     const response = ApiService.localLoginUser({uname,psw});
 
-    console.log({response});
+    console.log({ username,uname, psw});
 
     if ('accessToken' in response) {
       // swal("Success", response.message, "success", {
@@ -32,7 +35,7 @@ const Login = () => {
       
         localStorage.setItem('accessToken', response['accessToken']);
         localStorage.setItem('user', JSON.stringify(response['user']));
-        window.location.href = "/profile";
+        // window.location.href = "/profile";
      
     } else {
       // swal("Failed", response.message, "error");
@@ -55,6 +58,7 @@ const Login = () => {
                 value={uname}
                 required
                 onChange={changeHandler}
+                ref={userInputRef}
               />
             </div>
             <div className="col-md-12 my-2">
